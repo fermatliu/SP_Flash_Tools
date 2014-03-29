@@ -1,0 +1,2 @@
+Быстрая Интеграция ADB в C:\Windows\System32
+Выполнить fastboot.exe с правами админ.
