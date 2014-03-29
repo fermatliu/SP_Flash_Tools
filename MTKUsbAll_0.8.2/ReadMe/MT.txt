@@ -1,0 +1,22 @@
+Support MT:
+Поддерживаются MT:
+
+SmartPhone:
+MT6573 Innovative Platform for Mainstream Smartphones 
+MT6575 Dual-SIM smartphone platform for the mainstream market 
+MT6577 1 GHz Dual-Core Smartphone Platform 
+MT6589 Quad-Core Cortex-A7 1GHz+CPU Smartphone Platform
+
+FeaturePhone:
+MT6223 GSM/GPRS solution for ULC/ULC+ market 
+MT6235 GSM/GPRS/EDGE solution for Mainstream Multimedia 
+MT6236 GSM/GPRS/EDGE Feature-rich Multimedia solution 
+MT6238 GSM/GPRS/EDGE Premium Multimedia solution 
+MT6239 GSM/GPRS/EDGE Premium Multimedia solution 
+MT6250 Single-Chip GSM/GPRS/EDGE-RX entry-multimedia solution 
+MT6252 GSM/GPRS/EGPRS entry-multimedia single chip solution 
+MT6253 Single-Chip GSM/GPRS entry-multimedia solution 
+MT6255 Single-Chip GSM/GPRS/EDGE-RX Smart Feature Phone solution 
+MT6268 High-end EDGE/GPRS/WCDMA Feature Rich Multimedia Phone Solution 
+MT6276M HSPA Data Modem Solution 
+MT6516 EDGE/GPRS Feature Rich Multimedia Smart Phone Entry Solution 
