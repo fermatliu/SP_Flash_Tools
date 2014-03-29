@@ -1,0 +1,10 @@
+Tool Version:1.1329.05
+
+New Features/Enhancement:
+    1. Intial Pre-Release for Linux platform 
+
+Bug Fixes:
+    1. N/A
+
+Limitations:
+    1. Not support storage size larger than 4G

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<usb-setting>
+    <usb name="BOOTROM_VCOM" pid="0003" vid="0E8D"/>
+	<usb name="PRELOADER_VCOM" pid="2000" vid="0E8D"/>
+    <usb name="DA_HIGHSPEED_VCOM" pid="2001" vid="0E8D"/>
+</usb-setting>

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="flashtool-config">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="general"/>
+        <xs:element ref="commands"/>
+      </xs:sequence>
+      <xs:attribute name="version" use="required" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="general">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="chip-name"/>
+        <xs:element ref="storage-type"/>
+        <xs:element ref="download-agent"/>
+        <xs:element ref="scatter"/>
+        <xs:element ref="rom-list"/>
+        <xs:element ref="connection"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="download-agent" type="xs:string"/>
+  <xs:element name="scatter" type="xs:string"/>
+  <xs:element name="rom-list">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="rom"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="rom">
+    <xs:complexType mixed="true">
+      <xs:attribute name="enable" use="required" type="xs:boolean"/>
+      <xs:attribute name="index" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="chip-name">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:pattern value="MT[0-9]{4}"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="connection">
+    <xs:complexType>
+      <xs:attribute ref="type" use="required"/>
+      <xs:attribute name="high-speed" type="xs:boolean"/>
+      <xs:attribute name="without-battery" type="xs:boolean"/>
+      <xs:attribute name="port" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="commands">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="firmware-upgrade" minOccurs="0"/>
+        <xs:element ref="format" minOccurs="0"/>
+        <xs:element ref="combo-format" minOccurs="0"/>
+        <xs:element ref="da-download-all" minOccurs="0"/>
+        <xs:element ref="readback" minOccurs="0"/>
+        <xs:element ref="efuse" minOccurs="0" maxOccurs="1"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="firmware-upgrade">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="scene"/>
+        <xs:element ref="readback" minOccurs="0"/>
+        <xs:element ref="format" minOccurs="0"/>
+        <xs:element ref="da-download-all" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+<xs:element name="combo-format">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="format"/>
+      </xs:sequence>
+      <xs:attribute name="combo-dl" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="format">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="begin-addr" type="xs:string" minOccurs="0"/>
+        <xs:element name="length" type="xs:string" minOccurs="0"/>
+        <xs:element name="part-id" type="xs:string" minOccurs="0"/>
+      </xs:all>
+      <xs:attribute name="auto-format" type="xs:boolean" use="required"/>
+      <xs:attribute ref="auto-format-flag"/>
+      <xs:attribute ref="erase-flag" use="required"/>
+      <xs:attribute name="physical" use="required" type="xs:boolean"/>
+      <xs:attribute name="validation" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="da-download-all"/>
+
+  <xs:element name="readback">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="physical-readback" minOccurs="0"/>
+        <xs:element ref="readback-list" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="physical-readback">
+    <xs:complexType>
+      <xs:attribute name="is-physical-readback" type="xs:boolean" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="readback-list">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="readback-rom-item"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="readback-rom-item">
+    <xs:complexType mixed="true">
+      <xs:attribute name="start-address" type="xs:string" use="required"/>
+      <xs:attribute name="readback-length" type="xs:string" use="required"/>
+      <xs:attribute name="readback-index"  use="required" type="xs:integer"/>
+      <xs:attribute name="readback-enable" use="required" type="xs:boolean"/>
+      <xs:attribute ref="readback-flag"/>
+      <xs:attribute ref="addr-flag" use="required"/>
+      <xs:attribute ref="part-id"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="scene">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="LIKE_MOTA"/>
+        <xs:enumeration value="FORMAT_ALL_DOWNLOAD"/>
+        <xs:enumeration value="FIRMWARE_UPGRADE"/>
+        <xs:enumeration value="CUSTOM"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="storage-type">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:pattern value="NAND|EMMC"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:attribute name="type">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="BromUART"/>
+        <xs:enumeration value="BromUSB"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:attribute name="auto-format-flag">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:pattern value="FormatAll|FormatNVRAM|FormatExcept_BL"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:attribute name="erase-flag">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:pattern value="NormalErase|ForceErase|MarkBadBlock"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:attribute name="readback-flag">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:pattern value="NULL_READ_PAGE_SPARE|NUTL_READ_PAGE_ONLY|NUTL_READ_SPARE_ONLY|NUTL_READ_PAGE_WITH_ECC|NUTL_VERIFY_AFTER_PROGRAM"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:attribute name="addr-flag">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:pattern value="NUTL_ADDR_LOGICAL|NUTL_ADDR_PHYSICAL"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+ <xs:attribute name="part-id">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+         <xs:pattern value="EMMC_USER|EMMC_BOOT_1|EMMC_BOOT_2|EMMC_RPMB"/>
+      </xs:restriction>
+    </xs:simpleType>
+ </xs:attribute>
+
+  <!--efuse schema begin-->
+  
+  <!--efuse TAG definitions-->
+  <xs:element name="efuse" >
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="common-ctrl" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="secure-ctrl" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="sbc-pub-key" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="common-lock" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="secure-lock" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="usb-id" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="ac-key" type="hex_string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="spare" type="hex_string" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="read-back" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--efuse sub-TAG definitions-->
+  <xs:element name="common-ctrl">
+    <xs:complexType>
+      <xs:attribute name="USB_download_type" type="xs:int" />
+      <xs:attribute name="Disable_EMMC_boot" type="xs:boolean" />
+      <xs:attribute name="Disable_NAND_boot" type="xs:boolean" />
+      <xs:attribute name="Disable_NAND_boot_speedup" type="xs:boolean" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="secure-ctrl">
+    <xs:complexType>
+      <xs:attribute name="Enable_ACC" type="xs:boolean" />
+      <xs:attribute name="Enable_ACK" type="xs:boolean" />
+      <xs:attribute name="Enable_SBC" type="xs:boolean" />
+      <xs:attribute name="Enable_SLA" type="xs:boolean" />
+      <xs:attribute name="Enable_DAA" type="xs:boolean" />
+      <xs:attribute name="Disable_JTAG" type="xs:boolean" />
+      <xs:attribute name="Enable_Root_Cert" type="xs:boolean" />
+      <xs:attribute name="Enable_SW_JTAG_CON" type="xs:boolean" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="sbc-pub-key">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="pub-key-e" type="hex_string" />
+        <xs:element name="pub-key-n" type="hex_string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="usb-id">
+    <xs:complexType>
+      <xs:attribute name="vid" use="required" type="hex_short" />
+      <xs:attribute name="pid" use="required" type="hex_short" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="common-lock">
+    <xs:complexType>
+      <xs:attribute name="com_ctrl_lock" type="xs:boolean" />
+      <xs:attribute name="usb_id_lock" type="xs:boolean" />
+      <xs:attribute name="spare_lock" type="xs:boolean" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="secure-lock">
+    <xs:complexType>
+      <xs:attribute name="sec_attr_lock" type="xs:boolean" />
+      <xs:attribute name="ackey_lock" type="xs:boolean" />
+      <xs:attribute name="sbc_pubk_hash_lock" type="xs:boolean" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="read-back">
+    <xs:complexType>
+      <xs:attribute name="dir" type="xs:string" />
+      <xs:attribute name="name" type="xs:string" />
+      <xs:attribute name="time-prefix" type="xs:boolean" />
+    </xs:complexType>
+  </xs:element>
+
+  <!--type definitions-->
+  <xs:simpleType name="hex_short">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="([0-9]|[a-f]|[A-F]){4}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="hex_string">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="([0-9]|[a-f]|[A-F])*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <!--efuse schema end-->
+
+</xs:schema>
